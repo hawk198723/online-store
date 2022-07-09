@@ -1,6 +1,23 @@
 import React, { Component } from "react";
 
 export default class ToolBox extends Component {
+  state = {
+    searchText: "",
+  };
+
+  handleChange = (e) => {
+    const value = e.target.value;
+    this.setState({
+      searchText: value,
+    });
+    this.props.search(value);
+  };
+  clearSearchText = (e) => {
+    this.setState({
+      searchText: "",
+    });
+    this.props.search("");
+  };
   render() {
     return (
       <div className="tool-box">
@@ -12,10 +29,14 @@ export default class ToolBox extends Component {
                 type="text"
                 className="input search-input"
                 placeholder="Search Product"
+                value={this.state.searchText}
+                onChange={this.handleChange}
               />
             </div>
             <div className="control">
-              <button className="button">→</button>
+              <button className="button" onClick={this.clearSearchText}>
+                ✖︎
+              </button>
             </div>
           </div>
         </div>
