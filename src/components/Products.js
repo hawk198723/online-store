@@ -37,6 +37,9 @@ export default class Products extends Component {
   toAdd = () => {
     Panel.open({
       component: AddInventory,
+      callback: (data) => {
+        console.log("products data", data);
+      },
     });
   };
   render() {
