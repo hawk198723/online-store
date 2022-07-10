@@ -7,10 +7,13 @@ class AddInventory extends Component {
         <p className="title has-text-centered">Inventory</p>
         <br />
         <div className="control">
+          <input type="text" className="input" />
+        </div>
+        <div className="control">
           <button
             className="button"
             onClick={() => {
-              this.props.close();
+              this.props.close("addinventory data");
             }}
           >
             Cancel
