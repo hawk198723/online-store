@@ -41,6 +41,17 @@ class AddInventory extends Component {
       toast.success("Edit Inventory Successly");
     });
   };
+
+  onDelete = (e) => {
+    e.preventDefault();
+    const product = { ...this.state };
+    console.log(product);
+    axios.delete(`products/${this.state.id}`, product).then((response) => {
+      this.props.deleteProduct(this.state.id);
+      this.props.close();
+      toast.success("Delete Inventory Successly");
+    });
+  };
   // showToast = () => {
   //   toast("default");
   //   toast.warning("info");
@@ -123,6 +134,15 @@ class AddInventory extends Component {
           <div className="field is-grouped is-grouped-centered">
             <div className="control">
               <button className="button is-link">Submit</button>
+            </div>
+            <div className="control">
+              <button
+                className="button is-danger"
+                type="button"
+                onClick={this.onDelete}
+              >
+                Delete
+              </button>
             </div>
             <div className="control">
               <button
