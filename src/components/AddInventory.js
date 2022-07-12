@@ -1,3 +1,4 @@
+import axios from "commonFunctions/axios";
 import React, { Component } from "react";
 
 class AddInventory extends Component {
@@ -21,6 +22,10 @@ class AddInventory extends Component {
     e.preventDefault();
     const product = { ...this.state };
     console.log(product);
+    axios.post("products", product).then((response) => {
+      console.log(response.data);
+      this.props.close(response.data);
+    });
   };
 
   render() {
@@ -102,7 +107,15 @@ class AddInventory extends Component {
               <button className="button is-link">Submit</button>
             </div>
             <div className="control">
-              <button className="button is-link">Cancel</button>
+              <button
+                className="button is-link"
+                type="button"
+                onClick={() => {
+                  this.props.close();
+                }}
+              >
+                Cancel
+              </button>
             </div>
           </div>
           {/* <br />

@@ -38,8 +38,22 @@ export default class Products extends Component {
     Panel.open({
       component: AddInventory,
       callback: (data) => {
-        console.log("products data", data);
+        if (data) {
+          this.add(data);
+        }
       },
+    });
+  };
+
+  add = (product) => {
+    const _products = [...this.state.products];
+    _products.push(product);
+
+    const _sourceProducts = [...this.state.sourceProducts];
+    _sourceProducts.push(product);
+    this.setState({
+      products: _products,
+      sourceProducts: _sourceProducts,
     });
   };
   render() {
