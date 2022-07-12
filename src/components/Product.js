@@ -1,7 +1,23 @@
 import React, { Component } from "react";
 import { formatPrice } from "commonFunctions/helper";
+import Panel from "components/Panel";
+import EditInventory from "components/EditInventory";
 
 export default class Product extends Component {
+  toEdit = () => {
+    Panel.open({
+      component: EditInventory,
+      props: {
+        product: this.props.product,
+      },
+      callback: (data) => {
+        console.log(data);
+        if (data) {
+          this.props.update(data);
+        }
+      },
+    });
+  };
   render() {
     const { name, image, tags, price, status } = this.props.product;
     const _pClass = {
@@ -11,6 +27,11 @@ export default class Product extends Component {
     return (
       <div className={_pClass[status]}>
         <div className="p-content">
+          <div className="p-head has-text-right" onClick={this.toEdit}>
+            <span className="icon edit-btn">
+              <i className="fas fa-sliders"></i>
+            </span>
+          </div>
           <div className="img-wrapper">
             <div className="out-stock-text">Out of Stock</div>
             <figure className="image is-4by3">

@@ -4,12 +4,25 @@ import { toast } from "react-toastify";
 
 class AddInventory extends Component {
   state = {
+    id: "",
     name: "",
     price: "",
     tags: "",
     image: "",
     status: "available",
   };
+
+  componentDidMount() {
+    const { id, name, image, tags, price, status } = this.props.product;
+    this.setState({
+      id,
+      name,
+      image,
+      tags,
+      price,
+      status,
+    });
+  }
 
   handleChange = (e) => {
     const value = e.target.value;
@@ -23,9 +36,9 @@ class AddInventory extends Component {
     e.preventDefault();
     const product = { ...this.state };
     console.log(product);
-    axios.post("products", product).then((response) => {
+    axios.put(`products/${this.state.id}`, product).then((response) => {
       this.props.close(response.data);
-      toast.success("Add Inventory Successly");
+      toast.success("Edit Inventory Successly");
     });
   };
   // showToast = () => {
@@ -36,7 +49,7 @@ class AddInventory extends Component {
   render() {
     return (
       <div className="inventory">
-        <p className="title has-text-centered">Add Inventory</p>
+        <p className="title has-text-centered">Edit Inventory</p>
         <form onSubmit={this.submit}>
           <div className="field">
             <div className="control">
