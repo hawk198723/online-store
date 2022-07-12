@@ -1,5 +1,6 @@
 import axios from "commonFunctions/axios";
 import React, { Component } from "react";
+import { toast } from "react-toastify";
 
 class AddInventory extends Component {
   state = {
@@ -23,11 +24,15 @@ class AddInventory extends Component {
     const product = { ...this.state };
     console.log(product);
     axios.post("products", product).then((response) => {
-      console.log(response.data);
       this.props.close(response.data);
+      toast.success("Add Inventory Successly");
     });
   };
-
+  // showToast = () => {
+  //   toast("default");
+  //   toast.warning("info");
+  //   toast.info("info");
+  // };
   render() {
     return (
       <div className="inventory">
@@ -117,21 +122,18 @@ class AddInventory extends Component {
                 Cancel
               </button>
             </div>
+            {/* <div className="control">
+              <button
+                className="button is-primary"
+                type="button"
+                onClick={() => {
+                  this.showToast();
+                }}
+              >
+                Show
+              </button>
+            </div> */}
           </div>
-          {/* <br />
-        <div className="control">
-          <input type="text" className="input" />
-        </div>
-        <div className="control">
-          <button
-            className="button"
-            onClick={() => {
-              this.props.close("addinventory data");
-            }}
-          >
-            Cancel
-          </button>
-        </div> */}
         </form>
       </div>
     );
