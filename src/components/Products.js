@@ -9,6 +9,7 @@ export default class Products extends Component {
   state = {
     products: [],
     sourceProducts: [],
+    cartNum: 0,
   };
   componentDidMount() {
     axios.get("/products").then((response) => {
@@ -18,6 +19,7 @@ export default class Products extends Component {
         sourceProducts: response.data,
       });
     });
+    this.updateCartNum();
   }
   search = (text) => {
     console.log(text);
@@ -82,10 +84,27 @@ export default class Products extends Component {
       sourceProducts: _sourceProducts,
     });
   };
+
+  updateCartNum = async () => {
+    const cartNum = await this.initCartNum();
+    this.setState({
+      cartNum: cartNum,
+    });
+  };
+
+  initCartNum = async () => {
+    const res = await axios.get("/carts");
+    const carts = res.data || [];
+    const cartNum = carts
+      .map((cart) => cart.amount)
+      .reduce((a, value) => a + value, 0);
+
+    return cartNum;
+  };
   render() {
     return (
       <div>
-        <ToolBox search={this.search} />
+        <ToolBox search={this.search} cartNum={this.state.cartNum} />
         <div className="products">
           <div className="columns is-multiline is-desktop">
             <TransitionGroup component={null}>
@@ -101,6 +120,7 @@ export default class Products extends Component {
                         product={product}
                         update={this.update}
                         delete={this.delete}
+                        updateCartNum={this.updateCartNum}
                       />
                     </div>
                   </CSSTransition>

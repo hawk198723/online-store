@@ -42,6 +42,7 @@ export default class Product extends Component {
         await axios.post(`/carts`, cart);
       }
       toast.success("Add to Cart successfully!");
+      this.props.updateCartNum();
     } catch (error) {
       toast.error("Fail to add to Cart !");
     }
