@@ -24,9 +24,9 @@ export default class Product extends Component {
   addCart = async () => {
     try {
       const { id, name, image, price } = this.props.product;
-      const response = await axios.get(`/carts?productId${id}`);
+      const response = await axios.get(`/carts?productId=${id}`);
       const carts = response.data;
-      
+
       if (carts && carts.length > 0) {
         const cart = carts[0];
         cart.amount += 1;
