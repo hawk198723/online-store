@@ -12,12 +12,14 @@ export default class ToolBox extends Component {
     });
     this.props.search(value);
   };
+
   clearSearchText = (e) => {
     this.setState({
       searchText: "",
     });
     this.props.search("");
   };
+
   render() {
     return (
       <div className="tool-box">
@@ -42,7 +44,7 @@ export default class ToolBox extends Component {
         </div>
         <div className="cart">
           <i className="fas fa-shopping-cart"></i>
-          <span className="cart-num">(0)</span>
+          <span className="cart-num">({this.props.cartNum})</span>
         </div>
       </div>
     );
