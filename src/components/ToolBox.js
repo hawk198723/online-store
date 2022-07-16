@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
-export default class ToolBox extends Component {
+class ToolBox extends Component {
   state = {
     searchText: "",
   };
@@ -13,13 +14,15 @@ export default class ToolBox extends Component {
     this.props.search(value);
   };
 
-  clearSearchText = (e) => {
+  clearSearchText = () => {
     this.setState({
       searchText: "",
     });
     this.props.search("");
   };
-
+  goCart = () => {
+    this.props.history.push("/cart");
+  };
   render() {
     return (
       <div className="tool-box">
@@ -42,7 +45,7 @@ export default class ToolBox extends Component {
             </div>
           </div>
         </div>
-        <div className="cart">
+        <div to="/cart" className="cart-box" onClick={this.goCart}>
           <i className="fas fa-shopping-cart"></i>
           <span className="cart-num">({this.props.cartNum})</span>
         </div>
@@ -50,3 +53,4 @@ export default class ToolBox extends Component {
     );
   }
 }
+export default withRouter(ToolBox);
