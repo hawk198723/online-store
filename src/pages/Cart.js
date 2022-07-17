@@ -12,11 +12,21 @@ const Cart = () => {
   }, []);
 
   const totalPrice = () => {
-    console.log("----totalPrice-----");
     const totalPrice = carts
       .map((cart) => cart.amount * parseInt(cart.price))
       .reduce((a, value) => a + value, 0);
     return formatPrice(totalPrice);
+  };
+
+  const updateCart = (cart) => {
+    const newCarts = [...carts];
+    const _index = newCarts.findIndex((c) => c.id === cart.id);
+    newCarts.splice(_index, 1, cart);
+    setCarts(newCarts);
+  };
+  const deleteCart = (cart) => {
+    const _carts = carts.filter((c) => c.id !== cart.id);
+    setCarts(_carts);
   };
   return (
     <Layout>
@@ -24,7 +34,12 @@ const Cart = () => {
         <span className="cart-title">Shopping Cart</span>
         <div className="cart-list">
           {carts.map((cart) => (
-            <CartIem key={cart.id} cart={cart} />
+            <CartIem
+              key={cart.id}
+              cart={cart}
+              updateCart={updateCart}
+              deleteCart={deleteCart}
+            />
           ))}
         </div>
         <div className="cart-total">
