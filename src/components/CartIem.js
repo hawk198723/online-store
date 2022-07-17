@@ -1,11 +1,14 @@
 import { formatPrice } from "commonFunctions/helper";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import axios from "commonFunctions/axios";
 
 const CartIem = (props) => {
   const [amount, setAmount] = useState(props.cart.amount);
   const { id, name, image, price } = props.cart || {};
-  const sumPrice = formatPrice(amount * parseInt(price));
+
+  const sumPrice = useMemo(() => {
+    return formatPrice(amount * parseInt(price));
+  }, [amount, price]);
 
   const handleChange = (e) => {
     const _amount = parseInt(e.target.value);
