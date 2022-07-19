@@ -6,6 +6,7 @@ import "css/style.scss";
 import Router from "Router";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "commonFunctions/auth";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

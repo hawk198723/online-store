@@ -1,47 +1,70 @@
-import React, { Component } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import axios from "commonFunctions/axios";
+
 import "../css/app.scss";
 import "../css/style.scss";
+import { toast } from "react-toastify";
 
 export default function Login(props) {
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    console.log(this.state);
-    // this.props.history.push("/");
+  const onSubmit = async (data) => {
+    try {
+      const { email, password } = data;
+      const res = await axios.post("/auth/login", { email, password });
+      const jwToken = res.data;
+      console.log(jwToken);
+      global.auth.setToken(jwToken);
+      toast.success("Login Success");
+      props.history.push("/");
+    } catch (error) {
+      console.log(error.response.data);
+      const message = error.response.data.message;
+      toast.error(message);
+    }
   };
   return (
     <div className="login-wrapper">
-      <button
-        className="button"
-        onClick={(event) => this.handleClick("click", event)}
-      >
-        click me
-      </button>
-      <form className="box login-box" onSubmit={this.handleSubmit}>
+      <form className="box login-box" onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
           <label className="label">Email</label>
           <div className="control">
             <input
-              className="input"
+              className={`input ${errors.email && "is-danger"}`}
               type="email"
               placeholder="Email"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
+              {...register("email", { required: true })}
             />
+            {errors.email && (
+              <p className="helper has-text-danger">Email is required</p>
+            )}
           </div>
         </div>
         <div className="field">
           <label className="label">Password</label>
           <div className="control">
             <input
-              className="input"
+              className={`input ${errors.password && "is-danger"}`}
               type="password"
               placeholder="Password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Cannot be less than 6 characters",
+                },
+              })}
             />
+            {errors.password && (
+              <p className="helper has-text-danger">
+                {errors.password.message}
+              </p>
+            )}
           </div>
         </div>
         <div className="control">
