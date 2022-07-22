@@ -128,9 +128,11 @@ export default class Products extends Component {
               })}
             </TransitionGroup>
           </div>
-          <button className="button is-primary add-btn" onClick={this.toAdd}>
-            Add
-          </button>
+          {(global.auth.getUser() || {}).type === 1 && (
+            <button className="button is-primary add-btn" onClick={this.toAdd}>
+              Add
+            </button>
+          )}
         </div>
       </div>
     );
